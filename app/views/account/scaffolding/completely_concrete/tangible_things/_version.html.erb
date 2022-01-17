@@ -1,0 +1,9 @@
+<%= render 'shared/version', version: version do |p| %>
+  <% if version.event != "create" %>
+    <% p.content_for :body do %>
+      <% item = version.item.reload %>
+      <%= render 'shared/deltas/text_field', method: :text_field_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item.reload), version: version %>
+      <%= render 'shared/deltas/buttons_field', method: :boolean_button_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item.reload), version: version %>
+    <% end %>
+  <% end %>
+<% end %>
