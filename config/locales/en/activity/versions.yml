@@ -1,0 +1,11 @@
+en:
+  activity/versions: &versions
+    events:
+      create:
+        past_tense: Created
+      edit:
+        past_tense: Edited
+      update:
+        past_tense: Updated
+      destroy:
+        past_tense: Destroyed

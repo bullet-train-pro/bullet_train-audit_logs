@@ -1,0 +1,24 @@
+<% if after&.send(method) != before&.send(method) %>
+  <% before_value = ([before&.send(method)] || []).flatten %>
+  <% after_value = ([after&.send(method)] || []).flatten %>
+  <% added_values = after_value - before_value %>
+  <% removed_values = before_value - after_value %>
+  <%= render 'shared/deltas/field', label: t("#{locale_namespace(before)}.fields.#{method}.label") do |p| %>
+    <% p.content_for :body do %>
+      <% if added_values.any? %>
+        <%= render "shared/deltas/partials/insert" do |p| %>
+          <% p.content_for :body do %>
+            Added the <%= 'value'.pluralize(added_values.size) %>: <span class="font-semibold"><%= added_values.to_sentence %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% if removed_values.any? %>
+        <%= render "shared/deltas/partials/delete" do |p| %>
+          <% p.content_for :body do %>
+            Removed the <%= 'value'.pluralize(removed_values.size) %>: <span class="font-semibold"><%= removed_values.to_sentence %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,10 @@
+<% yield p = np %>
+
+<div class="pl-4">
+  <div class="form-group dark:bg-gray-600 bg-gray-200 rounded py-2 px-4 dark:text-gray-200 text-gray-700">
+    <label class=" font-semibold"><%= label %>:</label>
+    <div class="mt-1">
+      <%= p.content_for :body %>
+    </div>
+  </div>
+</div>

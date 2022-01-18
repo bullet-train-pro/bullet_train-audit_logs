@@ -2,8 +2,23 @@
 <%  user = User.find(version.whodunnit)    %>
 
 <li class="mb-10 pl-4 relative">
-    <div class="absolute w-3 h-3 bg-gray-200 rounded-full -left-1.5 top-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-    <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"><%= display_date_and_time version.created_at %></time>
-    <h3 class="text-lg font-semibold text-gray-900 dark:text-white"><%= "#{user.label_string} #{version.event}d" %> <%= link_to version.item.label_string, [:account, version.item] %></h3>
-    <%= p.content_for :body %>
+  <div class="absolute w-3 h-3 bg-gray-200 rounded-full -left-1.5 top-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+  <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"><%= display_date_and_time version.created_at %></time>
+  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-200">
+    <%= [user.label_string, t("activity/versions.events.#{version.event}.past_tense")].join(" ") %>
+    <%= " the " + t("#{version.item_type.underscore.pluralize}.label").singularize %>
+    <% item = version.item&.reload %>
+    <%# if the item has been destroyed, we use the last recorded version to show consistent names for the item across its history %>
+    <% last_version = Activity::Version.where(item_type: version.item_type, item_id: version.item_id).order(:created_at).last %>
+    <% item_name = (item || last_version.reify)&.label_string %>
+    <% if item %>
+      <%= link_to item_name, [:account, item] %>
+    <% else %>
+      <%= item_name %>
+    <% end %>
+    <% if item && item_name != item.label_string %>
+      <small>(now called <%= item.name %>)</small>
+    <% end %>
+  </h3>
+  <%= p.content_for :body %>
 </li>

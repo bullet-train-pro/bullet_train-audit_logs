@@ -1,0 +1,10 @@
+<% yield p = np %>
+
+<div class="flex items-center <%= classes %>">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 rounded <%= icon_classes %>" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <%= p.content_for :path %>
+  </svg>
+  <span class="ml-2">
+    <%= p.content_for :body %>
+  </span>
+</div>

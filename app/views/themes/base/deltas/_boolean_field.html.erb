@@ -1,0 +1,19 @@
+<% if after&.send(method) != before&.send(method) %>
+  <% before_value = before&.send(method) %>
+  <% after_value = after&.send(method) %>
+  <%= render 'shared/deltas/field', label: t("#{locale_namespace(before)}.fields.#{method}.label") do |p| %>
+    <% p.content_for :body do %>
+      <%= render 'shared/deltas/partials/change' do |b| %>
+        <% b.content_for :body do %>
+          Changed
+          <% if before_value != nil %>
+            from <span class="font-semibold"><%= before_value %></span>
+          <% end %>
+          <% if after_value != nil %>
+            to <span class="font-semibold"><%= after_value %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

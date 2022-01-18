@@ -1,0 +1,8 @@
+<% yield p = np %>
+
+<%= render 'shared/deltas/partials/base', classes: "dark:text-red-400 text-red-600", icon_classes: "bg-red-500 text-red-700" do |b| %>
+  <% b.content_for :path do %>
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  <% end %>
+  <% b.content_for :body, p.content_for(:body) %>
+<% end %>

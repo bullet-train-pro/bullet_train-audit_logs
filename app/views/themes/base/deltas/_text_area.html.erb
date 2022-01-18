@@ -1,0 +1,22 @@
+<% if after&.send(method) != before&.send(method) %>
+  <%= render 'shared/deltas/field', label: t("#{locale_namespace(before)}.fields.#{method}.label") do |p| %>
+    <% p.content_for :body do %>
+      <% Diffy::Diff.new(before&.send(method), after&.send(method), include_plus_and_minus_in_html: true, ignore_crlf: true, context: 1).each do |line| %>
+        <% case line %>
+        <% when /^\+/ %>
+          <%= render 'shared/deltas/partials/insert' do |b| %>
+            <% b.content_for :body do %>
+              <%= strip_tags line.chomp[1..-1] %>
+            <% end %>
+          <% end %>
+        <% when /^-/ %>
+          <%= render 'shared/deltas/partials/delete' do |b| %>
+            <% b.content_for :body do %>
+              <%= strip_tags line.chomp[1..-1] %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
