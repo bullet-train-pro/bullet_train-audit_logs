@@ -6,9 +6,8 @@ module ActivityActions
     @more_records = @child_object.activity_versions.count > params[:offset].to_i + 200
     @grouped_versions = @versions.group_by { |version| helpers.local_time(version.created_at).to_date }
     respond_to do |format|
-      format.html { render 'account/shared/activity' }
-      format.js { render 'account/shared/activity' }
+      format.html { render "account/shared/activity" }
+      format.js { render "account/shared/activity" }
     end
   end
-
 end
