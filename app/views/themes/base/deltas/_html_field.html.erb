@@ -1,0 +1,7 @@
+<% if after&.send(method) != before&.send(method) %>
+  <%= render 'shared/deltas/field', label: t("#{locale_namespace(before)}.fields.#{method}.label") do |p| %>
+    <% p.content_for :body do %>
+      <%= diff(before&.send(method), after&.send(method)).html_safe %>
+    <% end %>
+  <% end %>
+<% end %>
