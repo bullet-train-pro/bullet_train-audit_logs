@@ -11,6 +11,11 @@ class Activity::Version < PaperTrail::Version
   before_create do
     method = (item_type.underscore.gsub('/', '_') + '=').to_sym
 
+    # ActionText can add extra versions when there hasn't actually been a change, so we do this:
+    if item.is_a? ActionText::RichText
+      throw :abort if object_changes['body']&.first == object_changes['body']&.second
+    end
+
     # e.g. `self.scaffolding_absolutely_abstract_creative_concept = item`
     self.send(method, item)
 

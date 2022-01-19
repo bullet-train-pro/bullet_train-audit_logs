@@ -6,7 +6,7 @@
       <%= render 'shared/deltas/partials/change' do |b| %>
         <% b.content_for :body do %>
           Changed
-          <% if before_value != nil %>
+          <% unless before_value.blank? %>
             from
             <span class="rounded-lg px-2 py-1 inline-block text-white font-semibold" style="background-color: <%= before_value %>;">
               <span class="text-gray-500" style="mix-blend-mode: difference;">
@@ -14,14 +14,18 @@
               </span>
 
             </span>
+          <% else %>
+            from <span class="font-semibold">blank</span>
           <% end %>
-          <% if after_value != nil %>
+          <% unless after_value.blank? %>
             to
             <span class="rounded-lg px-2 py-1 inline-block text-white font-semibold" style="background-color: <%= after_value %>;">
               <span class="text-gray-500" style="mix-blend-mode: difference;">
                 <%= after_value %>
               </span>
             </span>
+          <% else %>
+            to <span class="font-semibold">blank</span>
           <% end %>
         <% end %>
       <% end %>

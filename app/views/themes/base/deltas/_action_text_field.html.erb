@@ -3,6 +3,9 @@
 <% if before.present? %>
   <% before += "\n" unless before[-1] == "\n" %>
 <% end %>
+<% if before.present? %>
+  <% after += "\n" unless after[-1] == "\n" %>
+<% end %>
 <% if before != after %>
   <%= render 'shared/deltas/field', label: t("#{locale_namespace(version.item.record)}.fields.#{version.item.name}.label") do |p| %>
     <% p.content_for :body do %>

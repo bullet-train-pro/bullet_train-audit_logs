@@ -1,8 +1,11 @@
-<%= render 'shared/version', version: version, item_class: version.item.record.class.to_s, item: version.item.record do |p| %>
-  <% if version.event == "update" %>
-    <% p.content_for :body do %>
-      <% item = version.item&.reload %>
-      <%= render 'shared/deltas/action_text_field', version: version %>
+<%# Once the item has been destroyed, don't try to render any rich text associated with it %>
+<% if version.item && version.event != "create" %>
+  <%= render 'shared/version', version: version, item_class: version.item.record.class.to_s, item: version.item.record do |p| %>
+    <% if version.event == "update" %>
+      <% p.content_for :body do %>
+        <% item = version.item&.reload %>
+        <%= render 'shared/deltas/action_text_field', version: version %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
