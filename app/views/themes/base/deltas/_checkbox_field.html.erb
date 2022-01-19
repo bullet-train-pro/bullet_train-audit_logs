@@ -3,7 +3,8 @@
   <% after_value = ([after&.send(method)] || []).flatten %>
   <% added_values = after_value - before_value %>
   <% removed_values = before_value - after_value %>
-  <%= render 'shared/deltas/field', label: t("#{locale_namespace(before)}.fields.#{method}.label") do |p| %>
+  <% namespace = before || after %>
+  <%= render 'shared/deltas/field', label: t("#{locale_namespace(namespace)}.fields.#{method}.label") do |p| %>
     <% p.content_for :body do %>
       <% if added_values.any? %>
         <%= render "shared/deltas/partials/insert" do |p| %>
