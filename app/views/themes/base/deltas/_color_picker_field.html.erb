@@ -1,0 +1,30 @@
+<% if after&.send(method) != before&.send(method) %>
+  <% before_value = before&.send(method) %>
+  <% after_value = after&.send(method) %>
+  <%= render 'shared/deltas/field', label: t("#{locale_namespace(before)}.fields.#{method}.label") do |p| %>
+    <% p.content_for :body do %>
+      <%= render 'shared/deltas/partials/change' do |b| %>
+        <% b.content_for :body do %>
+          Changed
+          <% if before_value != nil %>
+            from
+            <span class="rounded-lg px-2 py-1 inline-block text-white font-semibold" style="background-color: <%= before_value %>;">
+              <span class="text-gray-500" style="mix-blend-mode: difference;">
+                <%= before_value %>
+              </span>
+
+            </span>
+          <% end %>
+          <% if after_value != nil %>
+            to
+            <span class="rounded-lg px-2 py-1 inline-block text-white font-semibold" style="background-color: <%= after_value %>;">
+              <span class="text-gray-500" style="mix-blend-mode: difference;">
+                <%= after_value %>
+              </span>
+            </span>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

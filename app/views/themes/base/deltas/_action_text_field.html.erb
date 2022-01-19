@@ -1,0 +1,29 @@
+<% before = strip_tags version.object_changes&.dig('body')&.first&.gsub("<br>", "\n") %>
+<% after = strip_tags version.object_changes&.dig('body')&.second&.gsub("<br>", "\n") %>
+<% if before.present? %>
+  <% before += "\n" unless before[-1] == "\n" %>
+<% end %>
+<% if before != after %>
+  <%= render 'shared/deltas/field', label: t("#{locale_namespace(version.item.record)}.fields.#{version.item.name}.label") do |p| %>
+    <% p.content_for :body do %>
+      <% Diffy::Diff.new(before, after, include_plus_and_minus_in_html: true, ignore_crlf: true, context: 1).each do |line| %>
+        <% next if strip_tags(line.chomp[1..-1]).squish.blank? %>
+        <% case line %>
+        <% when /^\+/ %>
+          <%= render 'shared/deltas/partials/insert' do |b| %>
+            <% b.content_for :body do %>
+              <%= line[1..-1] %>
+            <% end %>
+          <% end %>
+        <% when /^-/ %>
+          <%= render 'shared/deltas/partials/delete' do |b| %>
+            <% b.content_for :body do %>
+              <%= line[1..-1] %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+

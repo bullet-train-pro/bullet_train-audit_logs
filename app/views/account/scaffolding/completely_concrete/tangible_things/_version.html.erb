@@ -3,9 +3,20 @@
     <% p.content_for :body do %>
       <% item = version.item&.reload %>
       <%= render 'shared/deltas/text_field', method: :text_field_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
-      <%= render 'shared/deltas/boolean_field', method: :boolean_button_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/radio_field', method: :boolean_button_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
       <%= render 'shared/deltas/text_field', method: :ckeditor_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
-      <%= render 'shared/deltas/buttons', method: :multiple_button_values, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/checkbox_field', method: :multiple_button_values, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/radio_field', method: :button_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/color_picker_field', method: :color_picker_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/date_field', method: :date_field_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/date_and_time_field', method: :date_and_time_field_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/radio_field', method: :email_field_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/radio_field', method: :option_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/checkbox_field', method: :multiple_option_values, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/radio_field', method: :super_select_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/checkbox_field', method: :multiple_super_select_values, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/text_area', method: :text_area_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
+      <%= render 'shared/deltas/action_text_field', method: :action_text_value, version: version %>
     <% end %>
   <% end %>
 <% end %>
