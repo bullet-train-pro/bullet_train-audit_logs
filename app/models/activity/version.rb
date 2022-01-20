@@ -30,18 +30,6 @@ class Activity::Version < PaperTrail::Version
       send(parent_association, item.record) if respond_to? parent_association
     end
 
-    if scaffolding_absolutely_abstract_creative_concepts_collaborator
-      self.scaffolding_absolutely_abstract_creative_concept ||= scaffolding_absolutely_abstract_creative_concepts_collaborator.creative_concept
-    end
-
-    if scaffolding_completely_concrete_tangible_thing
-      self.scaffolding_absolutely_abstract_creative_concept ||= scaffolding_completely_concrete_tangible_thing.absolutely_abstract_creative_concept
-    end
-
-    if scaffolding_absolutely_abstract_creative_concept
-      self.team ||= scaffolding_absolutely_abstract_creative_concept.team
-    end
-
     # Action Text creates an additional update after creating an object
     # To avoid creating an additional Activity::Version, we check if there's any actual changes first
     # TODO - make sure changes to ActionText fields are creating versions correctly
@@ -51,7 +39,7 @@ class Activity::Version < PaperTrail::Version
   # the column name scaffolding_absolutely_abstract_creative_concepts_collaborator is too long for postgres
   # so that our automatic assignment works, we alias these methods back to the full names
   def scaffolding_absolutely_abstract_creative_concepts_collaborator=(value)
-    self.creative_concepts_collaborator = (value)
+    self.creative_concepts_collaborator = value
   end
 
   def scaffolding_absolutely_abstract_creative_concepts_collaborator
