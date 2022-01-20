@@ -1,4 +1,4 @@
 <% begin %>
   <%= render "account/#{version.item_type.underscore.pluralize.gsub('::', '/')}/version", version: version %>
-<% rescue ActiveRecord::RecordNotFound %>
+<%# rescue ActionView::MissingTemplate %>
 <% end %>

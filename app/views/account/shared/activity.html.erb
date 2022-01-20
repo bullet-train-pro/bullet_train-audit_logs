@@ -1,16 +1,31 @@
-<% if @versions.any? %>
-  <ol class="relative border-l border-gray-200 dark:border-gray-700 text-gray-200">
-    <%= render @versions %>
-  </ol>
-<% else %>
-  <div class="h-52 border-dashed border rounded-lg flex items-center text-center text-lg">
-    <div class="w-full space-y-2">
-      <p class="w-full">
-        There's nothing to see here yet.
-      </p>
-      <p class="w-full">
-        Go make some changes!
-      </p>
-    </div>
-  </div>
+
+<%= render 'shared/page' do |p| %>
+
+  <% p.content_for :title, "Activity for #{@child_object.label_string}" %>
+  <% p.content_for :actions do %>
+    <% if params[:without_children] %>
+      <%= link_to "Include child objects", [:activity, :account, @child_object] %>
+    <% else %>
+      <%= link_to "Hide child objects", [:activity, :account, @child_object, without_children: true] %>
+    <% end %>
+  <% end %>
+  <% p.content_for :body do %>
+    <% if @versions.any? %>
+      <ol class="relative border-l border-gray-200 dark:border-gray-700 text-gray-200">
+        <%# render @versions.first %>
+        <%= render partial: "account/activity/versions/version", collection: @versions %>
+      </ol>
+    <% else %>
+      <div class="h-52 border-dashed border rounded-lg flex items-center text-center text-lg">
+        <div class="w-full space-y-2">
+          <p class="w-full">
+            There's nothing to see here yet.
+          </p>
+          <p class="w-full">
+            Go make some changes!
+          </p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
