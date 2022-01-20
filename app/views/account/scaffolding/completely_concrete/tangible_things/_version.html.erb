@@ -2,6 +2,7 @@
   <% if version.event == "update" %>
     <% p.content_for :body do %>
       <% item = version.item&.reload %>
+      <%# 🚅 skip this section when scaffolding. %>
       <%= render 'shared/deltas/radio_field', method: :text_field_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
       <%= render 'shared/deltas/radio_field', method: :boolean_button_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
       <%= render 'shared/deltas/html_field', method: :ckeditor_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
@@ -17,6 +18,8 @@
       <%= render 'shared/deltas/checkbox_field', method: :multiple_super_select_values, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
       <%= render 'shared/deltas/text_area', method: :text_area_value, before: version.reify.dup, after: (version.next.present? ? version.next.reify : item&.reload), version: version %>
       <%= render 'shared/deltas/action_text_field', method: :action_text_value, version: version %>
+      <%# 🚅 stop any skipping we're doing now. %>
+      <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
   <% end %>
 <% end %>
