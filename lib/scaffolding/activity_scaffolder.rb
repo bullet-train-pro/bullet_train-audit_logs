@@ -1,21 +1,28 @@
-module ActivityScaffolder
+require_relative "activity_transformer"
+
+module Scaffolding::ActivityScaffolder
   def scaffold_activity model, parent_models
-    puts parent_models
     parent_models = parent_models.split(",")
     parent_models += ["Team"]
     parent_models = parent_models.map(&:classify).uniq
 
-    transformer = Scaffolding::Transformer.new(model, parent_models)
+    transformer = Scaffolding::ActivityTransformer.new(model, parent_models)
 
-    # It should belong to the parent instead:
-    # output = `bin/rails g model #{transformer.transform_string("Scaffolding::CompletelyConcrete::TangibleThings::AppendEmojiAction" )} #{transformer.transform_string("scaffolding_completely_concrete_tangible_thing")}:references target_all:boolean target_ids:jsonb keep_receipt:boolean target_count:integer performed_count:integer created_by:references approved_by:references scheduled_for:datetime started_at:datetime completed_at:datetime sidekiq_jid:string #{attributes.join(" ")}`
-    output = `bin/rails g migration #{transformer.transform_string("r g migration AddScaffoldingCompletelyConcreteTangibleThingToActivityVersion scaffolding_completely_concrete_tangible_thing:references")}`
+    puts output = `bin/rails g migration #{transformer.transform_string("add_scaffolding_completely_concrete_tangible_thing_to_activity_versions scaffolding_completely_concrete_tangible_thing:references")}`
 
     if output.include?("conflict") || output.include?("identical")
       puts "\n👆 No problem! Looks like you're re-running this Super Scaffolding command. We can work with the model already generated!\n".green
     end
 
-    migration_file_name = `grep "create_table :#{transformer.transform_string("scaffolding_completely_concrete_tangible_things_append_emoji_actions")} do |t|" db/migrate/*`.split(":").first
+    migration_file_name = `grep "add_reference :activity_versions, :#{transformer.transform_string("scaffolding_completely_concrete_tangible_thing")}" db/migrate/*`.split(":").first
+    legacy_replace_in_file(migration_file_name, "null: false", "null: true")
+    legacy_replace_in_file(migration_file_name, "foreign_key: true", "foreign_key: false")
+
+    transformer.scaffold_activity
+
+
+
+
 
   end
 

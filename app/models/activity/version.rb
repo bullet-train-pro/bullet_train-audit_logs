@@ -7,6 +7,7 @@ class Activity::Version < PaperTrail::Version
   belongs_to :scaffolding_completely_concrete_tangible_thing, class_name: "Scaffolding::CompletelyConcrete::TangibleThing", optional: true
   belongs_to :action_text_rich_text, class_name: "ActionText::RichText", optional: true
   belongs_to :creative_concepts_collaborator, class_name: "Scaffolding::AbsolutelyAbstract::CreativeConcepts::Collaborator", optional: true, foreign_key: :creative_concepts_collaborator_id
+  # 🚅 add belongs_to associations above.
 
   before_create do
     method = (item_type.underscore.tr("/", "_") + "=").to_sym
@@ -22,6 +23,8 @@ class Activity::Version < PaperTrail::Version
     rescue NoMethodError
       raise "Activity::Version does not respond to #{method}.  You should add #{item.class} as an association to the Activity::Version model."
     end
+
+    # 🚅 Super Scaffolding will add new associations above
 
     if item.is_a? ActionText::RichText
       # The class of the Record that the rich text belongs to
