@@ -1,6 +1,6 @@
 class Scaffolding::ActivityTransformer < Scaffolding::Transformer
 
-  ACTIVITY_ASSOCIATIONS_HOOK = "# 🚅 Super Scaffolding will add new associations above"
+  ACTIVITY_ASSOCIATIONS_HOOK = "# 🚅 Super Scaffolding will add new associations below"
   ERB_NEW_ACTIONS_HOOK = "<%# 🚅 super scaffolding will insert new actions above this line. %>"
 
   def scaffold_activity
@@ -11,7 +11,7 @@ class Scaffolding::ActivityTransformer < Scaffolding::Transformer
     puts "Parents are:"
     puts parents
     parents.each do |parent|
-      scaffold_add_line_to_file("./app/models/activity/version.rb", "self.#{parent.downcase} ||= #{previous_parent.downcase}&.#{parent.downcase}", ACTIVITY_ASSOCIATIONS_HOOK, prepend: true)
+      scaffold_add_line_to_file("./app/models/activity/version.rb", "self.#{parent.downcase} ||= #{previous_parent.downcase}&.#{parent.downcase}", ACTIVITY_ASSOCIATIONS_HOOK, prepend: false)
       previous_parent = parent
     end
     routes_manipulator = Scaffolding::RoutesFileManipulator.new("config/routes.rb", child, parent)

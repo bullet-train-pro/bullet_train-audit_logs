@@ -24,7 +24,7 @@ class Activity::Version < PaperTrail::Version
       raise "Activity::Version does not respond to #{method}.  You should add #{item.class} as an association to the Activity::Version model."
     end
 
-    # 🚅 Super Scaffolding will add new associations above
+    # 🚅 Super Scaffolding will add new associations below
 
     if item.is_a? ActionText::RichText
       # The class of the Record that the rich text belongs to
