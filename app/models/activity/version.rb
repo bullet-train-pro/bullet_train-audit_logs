@@ -3,10 +3,7 @@ class Activity::Version < PaperTrail::Version
   self.sequence_name = :activity_versions_id_seq
 
   belongs_to :team, class_name: "Team", optional: true
-  belongs_to :scaffolding_absolutely_abstract_creative_concept, class_name: "Scaffolding::AbsolutelyAbstract::CreativeConcept", optional: true
-  belongs_to :scaffolding_completely_concrete_tangible_thing, class_name: "Scaffolding::CompletelyConcrete::TangibleThing", optional: true
   belongs_to :action_text_rich_text, class_name: "ActionText::RichText", optional: true
-  belongs_to :creative_concepts_collaborator, class_name: "Scaffolding::AbsolutelyAbstract::CreativeConcepts::Collaborator", optional: true, foreign_key: :creative_concepts_collaborator_id
   # 🚅 add belongs_to associations above.
 
   before_create do
