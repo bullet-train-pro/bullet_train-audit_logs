@@ -1,5 +1,4 @@
 class Scaffolding::ActivityTransformer < Scaffolding::Transformer
-
   ACTIVITY_ASSOCIATIONS_HOOK = "# 🚅 Super Scaffolding will add new associations below"
   ERB_NEW_ACTIONS_HOOK = "<%# 🚅 super scaffolding will insert new actions above this line. %>"
 
@@ -21,5 +20,4 @@ class Scaffolding::ActivityTransformer < Scaffolding::Transformer
     controller_transformer = Scaffolding::ControllerTransformer.new(child, parents)
     controller_transformer.add_option_to_account_load_and_authorize_resource(member_actions: :activity)
   end
-
 end

@@ -1,5 +1,4 @@
 class Scaffolding::ControllerTransformer < Scaffolding::Transformer
-
   def add_option_to_account_load_and_authorize_resource option_hash
     transformed_file_name = transform_string("./app/controllers/account/scaffolding/completely_concrete/tangible_things_controller.rb")
     transformed_needle = transform_string("account_load_and_authorize_resource :scaffolding_completely_concrete_tangible_thing")
@@ -30,12 +29,9 @@ class Scaffolding::ControllerTransformer < Scaffolding::Transformer
           last_non_whitespace_character = line.index(/\s*$/)
           line.insert(last_non_whitespace_character, ", #{key}: [:#{value}]")
         end
-        new_target_file_content << line
-      else
-        new_target_file_content << line
       end
+      new_target_file_content << line
     end
     File.write(transformed_file_name, new_target_file_content.join("\n").strip + "\n") if line_found
   end
-
 end
