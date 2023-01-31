@@ -1,8 +1,4 @@
 # BulletTrain::AuditLogs
-Short description and motivation.
-
-## Usage
-How to use my plugin.
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -19,6 +15,22 @@ $ bundle
 Or install it yourself as:
 ```bash
 $ gem install bullet_train-audit_logs
+```
+
+Copy the migrations into your application:
+```bash
+$ rake bullet_train_audit_logs_engine:install:migrations
+```
+
+Migrate your database
+```bash
+bin/rails db:migrate
+```
+
+## Usage
+View the usage docs from the command line by running:
+```bash
+$ bin/super_scaffold audit_logs
 ```
 
 ## Contributing
