@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 6.0"
+  spec.add_dependency "paper_trail", "~> 14.0"
 end
