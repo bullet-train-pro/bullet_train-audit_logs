@@ -11,7 +11,7 @@ module BulletTrain
             exit
           end
 
-          if argv.count != 2
+          if argv.count < 2
             puts usage_message
             exit
           end
@@ -20,6 +20,8 @@ module BulletTrain
           parent_models = parent_models.split(",")
           parent_models += ["Team"]
           parent_models = parent_models.map(&:classify).uniq
+
+          attributes = argv[2..]
 
           transformer = Scaffolding::ActivityTransformer.new(target_model, parent_models)
           puts output = `bin/rails g migration #{transformer.transform_string("add_scaffolding_completely_concrete_tangible_thing_to_activity_versions scaffolding_completely_concrete_tangible_thing:references")}`
@@ -35,21 +37,23 @@ module BulletTrain
           legacy_replace_in_file(migration_file_name, "null: false", "null: true")
           legacy_replace_in_file(migration_file_name, "foreign_key: true", "foreign_key: false")
 
-          transformer.scaffold_activity
+          transformer.scaffold_activity(attributes)
 
         end
 
         def usage_message
           <<~USAGE
-            🚅  usage: bin/super-scaffold audit_logs <Model> <ParentModel[s]>
+            🚅  usage: bin/super-scaffold audit_logs <Model> <ParentModel[s]> <attribute:type> <attribute:type> ...
 
             E.g. to add audit_logs to a Project model that belongs to team:
 
-              bin/super-scaffold audit_logs Project Team
+              bin/super-scaffold audit_logs Project Team name:text_field
 
             E.g. to add audit_logs to a Document model that belongs to Team through a Project
 
-              bin/super-scaffold audit_logs Document Project,Team
+              bin/super-scaffold audit_logs Document Project,Team name:text_field subject:text_area
+
+            The attributes you specify will be added to the _version partial and used to show different versions of the model.
 
             Give it a shot! Let us know if you have any trouble with it! ✌️
           USAGE
