@@ -17,10 +17,11 @@ Or install it yourself as:
 $ gem install bullet_train-audit_logs
 ```
 
-Copy the migrations into your application:
+Run the installation rake task
 ```bash
-$ rake bullet_train_audit_logs_engine:install:migrations
+$ rake bullet_train:audit_logs:install
 ```
+This will install the migrations and add the Activity::Version model to your application
 
 Migrate your database
 ```bash

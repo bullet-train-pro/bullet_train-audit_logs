@@ -1,10 +1,16 @@
 require "scaffolding/activity_transformer"
+require "scaffolding/controller_transformer"
 
 module BulletTrain
   module AuditLogs
     module Scaffolders
       class AuditLogScaffolder < SuperScaffolding::Scaffolder
         def run
+          if installation_has_not_been_run?
+            puts install_message
+            exit
+          end
+
           if argv.count != 2
             puts usage_message
             exit
@@ -45,6 +51,24 @@ module BulletTrain
 
             Give it a shot! Let us know if you have any trouble with it! ✌️
           USAGE
+        end
+
+        def installation_has_not_been_run?
+          !File.exist?(Rails.root.join("app/models/activity/version.rb"))
+        end
+
+        def install_message
+          <<~INSTALL
+
+            🚅  The Audit Log installer has not been run yet.
+
+            To install it, run:
+
+              bundle exec rake bullet_train:audit_logs:install
+
+            Give it a shot! Let us know if you have any trouble with it! ✌️
+
+          INSTALL
         end
       end
     end

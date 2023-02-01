@@ -1,19 +1,8 @@
 require "paper_trail"
+
 module BulletTrain
   module AuditLogs
     class Engine < ::Rails::Engine
-      # This comes from the paper_trail gem's Railtie. We need to do this because
-      # when we are in a Rails engine, the Railtie is not loaded for a dependent gem
-      initializer "bullet_train.audit_logs", before: "load_config_initializers" do
-        ActiveSupport.on_load(:action_controller) do
-          require "paper_trail/frameworks/rails/controller"
-          include PaperTrail::Rails::Controller
-        end
-
-        ActiveSupport.on_load(:active_record) do
-          require "paper_trail/frameworks/active_record"
-        end
-      end
 
       initializer "bullet_train.audit_logs.register_routing_concerns" do |app|
         BulletTrain.routing_concerns << proc do
