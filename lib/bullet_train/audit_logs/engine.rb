@@ -1,4 +1,5 @@
 require "paper_trail"
+require 'diffy'
 
 module BulletTrain
   module AuditLogs
