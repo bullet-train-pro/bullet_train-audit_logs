@@ -21,6 +21,10 @@ module BulletTrain
           "audit_logs" => "BulletTrain::AuditLogs::Scaffolders::AuditLogScaffolder"
         })
       end
+
+      initializer "bullet_train.audit_logs.register_template_path" do |app|
+        BulletTrain::SuperScaffolding.template_paths << File.expand_path("../../../../", __FILE__)
+      end
     end
   end
 end

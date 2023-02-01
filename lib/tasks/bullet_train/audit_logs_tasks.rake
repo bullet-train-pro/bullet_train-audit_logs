@@ -4,7 +4,7 @@ namespace :bullet_train do
     task install: :environment do
       root_path = File.expand_path("../../../..", __FILE__)
       puts "Installing the migrations"
-      `bundle exec rake bullet_train_engine:install:migrations`
+      `bundle exec rake bullet_train_audit_logs_engine:install:migrations`
       puts "Ensure you run `rake db:migrate` to run the new migrations.".green
       puts "Adding the Activity::Version model"
       FileUtils.mkdir_p "#{Rails.root}/app/models/activity"

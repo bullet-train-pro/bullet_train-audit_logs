@@ -27,6 +27,8 @@ module BulletTrain
           if output.include?("conflict") || output.include?("identical")
             puts "\n👆 No problem! Looks like you're re-running this Super Scaffolding command. We can work with the migration already generated!".green
             puts "   You may need to rollback then re-run the migration named #{transformer.transform_string("add_scaffolding_completely_concrete_tangible_thing_to_activity_versions")} though.".green
+          else
+            puts "\nA new migration has been created. Use `bin/rails db:migrate` to run it.".green
           end
 
           migration_file_name = `grep "add_reference :activity_versions, :#{transformer.transform_string("scaffolding_completely_concrete_tangible_thing")}" db/migrate/*`.split(":").first
