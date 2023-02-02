@@ -1,5 +1,5 @@
 <%= render 'shared/version', version: version do |p| %>
-  <% if version.event.update? %>
+  <% if version.update? %>
     <% p.content_for :body do %>
       <% item = version.item&.reload %>
       <%# 🚅 skip this section when scaffolding. %>

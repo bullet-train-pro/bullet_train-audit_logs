@@ -12,6 +12,7 @@ class Activity::Version < PaperTrail::Version
   def event
     super.to_s.inquiry
   end
+  delegate :create?, :update?, :destroy?, to: :event
 
   before_create do
     method = (item_type.underscore.tr("/", "_") + "=").to_sym
