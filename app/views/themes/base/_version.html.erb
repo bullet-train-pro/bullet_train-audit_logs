@@ -19,9 +19,7 @@
         <%= version.latest.reify&.label_string %>
       <% end %>
 
-      <%# TODO: Fix subtle name check bug when the item is a join table model, like ActionText::RichText %>
-      <% record_name = (version.record || version.latest.reify)&.label_string %>
-      <% if version.record && record_name != version.record&.label_string %>
+      <% if version.record&.label_string != version.latest&.reify&.label_string %>
         <small>(now called <%= version.record.name %>)</small>
       <% end %>
     <% end %>
