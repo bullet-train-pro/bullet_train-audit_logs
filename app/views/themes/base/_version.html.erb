@@ -13,12 +13,10 @@
     <% else %>
       <%= [version.user&.label_string, t("activity/versions.events.#{version.event}.past_tense")].join(" ") %>
       <%= " the " + t("#{item_class.underscore.pluralize}.label").singularize %>
+
       <%# if the item has been destroyed, we use the last recorded version to show consistent names for the item across its history %>
-      <% if item %>
-        <%= link_to item_name, [:account, item] %>
-      <% else %>
-        <%= item_name %>
-      <% end %>
+      <%= link_to_if item, item_name, [:account, item] %>
+
       <% if item && item_name != item.label_string %>
         <small>(now called <%= item.name %>)</small>
       <% end %>
