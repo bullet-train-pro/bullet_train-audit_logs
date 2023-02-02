@@ -7,6 +7,8 @@ class Activity::Version < PaperTrail::Version
   belongs_to :action_text_rich_text, class_name: "ActionText::RichText", optional: true
   # 🚅 add belongs_to associations above.
 
+  scope :latest, -> { order(created_at: :desc).where(item_type: item_type, item_id: item_id) }
+
   before_create do
     method = (item_type.underscore.tr("/", "_") + "=").to_sym
 
