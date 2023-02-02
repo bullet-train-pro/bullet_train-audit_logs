@@ -9,6 +9,10 @@ class Activity::Version < PaperTrail::Version
 
   scope :latest, -> { order(created_at: :desc).where(item_type: item_type, item_id: item_id) }
 
+  def event
+    super.to_s.inquiry
+  end
+
   before_create do
     method = (item_type.underscore.tr("/", "_") + "=").to_sym
 
