@@ -13,10 +13,14 @@
       <%= t("#{version.record_type.underscore.pluralize}.label").singularize %>
 
       <%# if the item has been destroyed, we use the last recorded version to show consistent names for the item across its history %>
+      <% if version.record %>
+        <%= link_to version.record.name, [:account, version.record] %>
+      <% else %>
+        <%= version.latest.reify&.label_string %>
+      <% end %>
+
       <%# TODO: Fix subtle name check bug when the item is a join table model, like ActionText::RichText %>
       <% record_name = (version.record || version.latest.reify)&.label_string %>
-      <%= link_to_if version.record, record_name, [:account, version.record] %>
-
       <% if version.record && record_name != version.record&.label_string %>
         <small>(now called <%= version.record.name %>)</small>
       <% end %>
