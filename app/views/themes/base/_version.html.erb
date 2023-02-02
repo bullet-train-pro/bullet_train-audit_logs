@@ -1,5 +1,4 @@
 <% yield p = np %>
-<%  user = User.find_by_id(version.whodunnit)    %>
 <% item_class ||= version.item_type %>
 <% item ||= version.item&.reload %>
 <% last_version = Activity::Version.where(item_type: version.item_type, item_id: version.item_id).order(:created_at).last %>
@@ -12,7 +11,7 @@
     <% if p.content_for? :header %>
       <%= p.content_for :header %>
     <% else %>
-      <%= [user&.label_string, t("activity/versions.events.#{version.event}.past_tense")].join(" ") %>
+      <%= [version.user&.label_string, t("activity/versions.events.#{version.event}.past_tense")].join(" ") %>
       <%= " the " + t("#{item_class.underscore.pluralize}.label").singularize %>
       <%# if the item has been destroyed, we use the last recorded version to show consistent names for the item across its history %>
       <% if item %>

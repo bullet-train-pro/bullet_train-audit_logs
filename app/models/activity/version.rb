@@ -2,6 +2,7 @@ class Activity::Version < PaperTrail::Version
   self.table_name = :activity_versions
   self.sequence_name = :activity_versions_id_seq
 
+  belongs_to :user, foreign_key: :whodunnit
   belongs_to :team, class_name: "Team", optional: true
   belongs_to :action_text_rich_text, class_name: "ActionText::RichText", optional: true
   # 🚅 add belongs_to associations above.
