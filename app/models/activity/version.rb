@@ -41,11 +41,5 @@ class Activity::Version < PaperTrail::Version
 
   # the column name scaffolding_absolutely_abstract_creative_concepts_collaborator is too long for postgres
   # so that our automatic assignment works, we alias these methods back to the full names
-  def scaffolding_absolutely_abstract_creative_concepts_collaborator=(value)
-    self.creative_concepts_collaborator = value
-  end
-
-  def scaffolding_absolutely_abstract_creative_concepts_collaborator
-    creative_concepts_collaborator
-  end
+  alias_attribute :scaffolding_absolutely_abstract_creative_concepts_collaborator, :creative_concepts_collaborator
 end
