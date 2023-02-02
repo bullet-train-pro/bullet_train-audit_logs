@@ -14,6 +14,14 @@ class Activity::Version < PaperTrail::Version
   end
   delegate :create?, :update?, :destroy?, to: :event
 
+  def record
+    case item
+    when ActionText::RichText then item.record
+    else
+      item
+    end
+  end
+
   before_create do
     method = (item_type.underscore.tr("/", "_") + "=").to_sym
 
