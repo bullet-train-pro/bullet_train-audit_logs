@@ -1,6 +1,6 @@
 <%# Once the item has been destroyed, don't try to render any rich text associated with it %>
 <% if version.item && !version.create? %>
-  <%= render 'shared/version', version: version, item_class: version.item.record.class.to_s do |p| %>
+  <%= render 'shared/version', version: version do |p| %>
     <% if version.update? %>
       <% p.content_for :body do %>
         <% item = version.item&.reload %>

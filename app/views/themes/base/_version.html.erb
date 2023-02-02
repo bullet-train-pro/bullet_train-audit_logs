@@ -1,5 +1,4 @@
 <% yield p = np %>
-<% item_class ||= version.item_type %>
 <% version.record&.reload %>
 <% item_name ||= (version.record || version.latest.reify)&.label_string %>
 
@@ -11,7 +10,7 @@
       <%= p.content_for :header %>
     <% else %>
       <%= [version.user&.label_string, t("activity/versions.events.#{version.event}.past_tense")].join(" ") %>
-      <%= " the " + t("#{item_class.underscore.pluralize}.label").singularize %>
+      <%= " the " + t("#{version.record_type.underscore.pluralize}.label").singularize %>
 
       <%# if the item has been destroyed, we use the last recorded version to show consistent names for the item across its history %>
       <%= link_to_if version.record, item_name, [:account, version.record] %>

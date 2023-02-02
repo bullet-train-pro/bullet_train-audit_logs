@@ -14,6 +14,10 @@ class Activity::Version < PaperTrail::Version
   end
   delegate :create?, :update?, :destroy?, to: :event
 
+  def record_type
+    record&.class&.name
+  end
+
   def record
     case item
     when ActionText::RichText then item.record
