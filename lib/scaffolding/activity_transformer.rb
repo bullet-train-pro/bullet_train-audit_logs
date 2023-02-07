@@ -1,11 +1,10 @@
 class Scaffolding::ActivityTransformer < Scaffolding::Transformer
   ACTIVITY_ASSOCIATIONS_HOOK = "# 🚅 Super Scaffolding will add new associations below"
-  ERB_NEW_ACTIONS_HOOK = "<%# 🚅 super scaffolding will insert new actions above this line. %>"
+  ERB_NEW_ACTIONS_HOOK = "<%# 🚅 super scaffolding will insert new action model buttons above this line. %>"
 
   def scaffold_activity(attributes)
     scaffold_add_line_to_file("./app/models/scaffolding/completely_concrete/tangible_thing.rb", "include Activity\n", CONCERNS_HOOK, prepend: true)
     scaffold_add_line_to_file("./app/models/activity/version.rb", "belongs_to :scaffolding_completely_concrete_tangible_thing, class_name: \"Scaffolding::CompletelyConcrete::TangibleThing\", optional: true\n", BELONGS_TO_HOOK, prepend: true)
-    # TODO - this button is not being added
     scaffold_add_line_to_file("./app/views/account/scaffolding/completely_concrete/tangible_things/show.html.erb", "<%= link_to t('global.buttons.activity'), [:activity, :account, @tangible_thing], class: first_button_primary %>", ERB_NEW_ACTIONS_HOOK, prepend: true)
     previous_parent = child
     parents.each do |parent|
