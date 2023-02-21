@@ -12,7 +12,14 @@ class Scaffolding::ActivityTransformer < Scaffolding::Transformer
       previous_parent = parent
     end
     routes_manipulator = Scaffolding::RoutesFileManipulator.new("config/routes.rb", child, parent)
-    # routes_manipulator.add_concern(["account"], :activity)
+    begin
+      line_number = routes_manipulator.apply(["account"])
+      routes_manipulator.add_concern_at_line(:activity, line_number)
+      Scaffolding::FileManipulator.write("config/routes.rb", routes_manipulator.lines)
+    rescue => e
+      puts "We weren't able to add the activity concern to the routes file.".red
+      puts "The error was #{e}"
+    end
     # routes_manipulator.write
     scaffold_add_line_to_file("./app/controllers/account/scaffolding/completely_concrete/tangible_things_controller.rb", "  include ActivityActions", "class Account::Scaffolding::CompletelyConcrete::TangibleThingsController < Account::ApplicationController", increase_indent: true)
     scaffold_file("app/views/account/scaffolding/completely_concrete/tangible_things/_version.html.erb")
