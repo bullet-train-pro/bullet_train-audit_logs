@@ -34,7 +34,7 @@ do
   :
   grep -v "gem \"$package\"" Gemfile > Gemfile.tmp
   mv Gemfile.tmp Gemfile
-  echo "gem \"$package\", path: \"../../$package\"" >> Gemfile
+  echo "gem \"$package\", path: \"../..\"" >> Gemfile
 done
 
 updates="${packages[@]}"
