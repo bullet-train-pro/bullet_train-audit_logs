@@ -28,9 +28,9 @@ class Scaffolding::ActivityTransformer < Scaffolding::Transformer
       parts = attribute.split(":")
       name = parts.shift
       type = parts.join(":")
-      boolean_buttons = type == "boolean"
+      # boolean_buttons = type == "boolean"
       line_to_add = `cat #{File.join(base_path, "app/views/account/scaffolding/completely_concrete/tangible_things/_version.html.erb")} | grep #{type}_value`
-      line_to_add.gsub!("#{type}_value", "#{name}")
+      line_to_add.gsub!("#{type}_value", name.to_s)
       scaffold_add_line_to_file("./app/views/account/scaffolding/completely_concrete/tangible_things/_version.html.erb", line_to_add, ERB_NEW_FIELDS_HOOK, prepend: true)
     end
     controller_transformer = Scaffolding::ControllerTransformer.new(child, parents)

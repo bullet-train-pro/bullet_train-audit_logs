@@ -1,10 +1,9 @@
 require "paper_trail"
-require 'diffy'
+require "diffy"
 
 module BulletTrain
   module AuditLogs
     class Engine < ::Rails::Engine
-
       initializer "bullet_train.audit_logs.register_routing_concerns" do |app|
         BulletTrain.routing_concerns << proc do
           concern :activity do

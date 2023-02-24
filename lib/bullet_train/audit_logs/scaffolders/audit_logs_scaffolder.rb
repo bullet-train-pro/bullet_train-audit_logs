@@ -38,7 +38,6 @@ module BulletTrain
           legacy_replace_in_file(migration_file_name, "foreign_key: true", "foreign_key: false")
 
           transformer.scaffold_activity(attributes)
-
         end
 
         def usage_message
