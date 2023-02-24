@@ -190,8 +190,8 @@ workflows:
     jobs:
       # - 'Local Minitest'
       - 'Local Standard Ruby':
-        context: knapsack-pro
+          context: knapsack-pro
       - 'Starter Repo Minitest':
-        context: knapsack-pro
+          context: knapsack-pro
       - 'Starter Repo Minitest for Super Scaffolding':
-        context: knapsack-pro
+          context: knapsack-pro
