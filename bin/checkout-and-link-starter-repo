@@ -38,4 +38,8 @@ do
 done
 
 updates="${packages[@]}"
-bundle lock --update $updates
+
+# TODO Not 100% sure on this, but to get CI working we had to replace this.
+# bundle lock --update $updates
+
+bundle install
