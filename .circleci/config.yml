@@ -96,7 +96,7 @@ jobs:
     working_directory: tmp/starter
     environment:
       BUNDLE_PATH: vendor/bundle
-    parallelism: 16
+    parallelism: 8
     steps:
       - checkout:
           path: ~/project
@@ -125,7 +125,7 @@ jobs:
           command: bundle exec rails "knapsack_pro:queue:minitest[--verbose]"
           environment:
             RAILS_ENV: test
-            KNAPSACK_PRO_CI_NODE_TOTAL: 16
+            KNAPSACK_PRO_CI_NODE_TOTAL: 8
 
       # If you don't want to use Knapsack Pro, then use this configuration:
       #
@@ -152,7 +152,7 @@ jobs:
     working_directory: tmp/starter
     environment:
       BUNDLE_PATH: vendor/bundle
-    parallelism: 16
+    parallelism: 1
     steps:
       - checkout:
           path: ~/project
