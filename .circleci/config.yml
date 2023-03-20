@@ -28,7 +28,7 @@ aliases:
       paths:
         - node_modules
   - &ruby_node_browsers_docker_image
-      - image: cimg/ruby:3.2.1-browsers
+      - image: cimg/ruby:3.2.0-browsers
         environment:
           PGHOST: localhost
           PGUSER: untitled_application
@@ -143,6 +143,48 @@ jobs:
       # - store_test_results:
       #     path: test/reports
 
+  'Audit Log System Tests':
+    docker:
+      - <<: *ruby_node_browsers_docker_image
+      - <<: *postgres_docker_image
+      - image: circleci/redis
+    executor: ruby/default
+    working_directory: tmp/starter
+    environment:
+      BUNDLE_PATH: vendor/bundle
+    parallelism: 1
+    steps:
+      - checkout:
+          path: ~/project
+      - browser-tools/install-browser-tools:
+          firefox-version: 108.0.1
+
+      - run: ../../bin/checkout-and-link-starter-repo
+
+      - restore_cache: *restore_bundler_cache
+      - run: bundle install
+      - run: bundle clean --force
+      - run: bundle exec rake bt:link
+      - run: yarn install
+      - run: yarn build
+      - run: yarn build:css
+
+      - save_cache: *save_bundler_cache
+
+      # TODO Figure out how to make these work for `tmp/starter`
+      # - restore_cache: *restore_yarn_cache
+
+      - *wait_for_docker
+
+      - run: "bundle add spring"
+      - run:
+          name: 'Setup Audit Logs System Tests'
+          command: "bundle exec test/bin/setup-audit-logs-system-test"
+      - run:
+          name: 'Run Audit Logs System Tests'
+          command: "bundle exec rails test test/system/bullet_train_gems/audit_logs/super_scaffolding_test.rb"
+
+
   'Starter Repo Minitest for Super Scaffolding':
     docker:
       - <<: *ruby_node_browsers_docker_image
@@ -194,4 +236,6 @@ workflows:
       - 'Starter Repo Minitest':
           context: knapsack-pro
       - 'Starter Repo Minitest for Super Scaffolding':
+          context: knapsack-pro
+      - 'Audit Log System Tests':
           context: knapsack-pro
