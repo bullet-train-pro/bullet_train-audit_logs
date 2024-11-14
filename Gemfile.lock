@@ -3,7 +3,7 @@ PATH
   specs:
     bullet_train-audit_logs (1.0.0)
       diffy (~> 3.4)
-      paper_trail (~> 14.0)
+      paper_trail (>= 14.0)
       rails (>= 6.0)
 
 GEM
