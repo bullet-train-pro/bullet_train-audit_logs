@@ -2,9 +2,29 @@ class Activity::Version < PaperTrail::Version
   self.table_name = :activity_versions
   self.sequence_name = :activity_versions_id_seq
 
+  belongs_to :user, foreign_key: :whodunnit
   belongs_to :team, class_name: "Team", optional: true
   belongs_to :action_text_rich_text, class_name: "ActionText::RichText", optional: true
   # 🚅 add belongs_to associations above.
+
+  scope :latest, -> { order(created_at: :desc).where(item_type: item_type, item_id: item_id) }
+
+  def event
+    super.to_s.inquiry
+  end
+  delegate :create?, :update?, :destroy?, to: :event
+
+  def record_type
+    record&.class&.name
+  end
+
+  def record
+    case item
+    when ActionText::RichText then item.record
+    else
+      item
+    end
+  end
 
   before_create do
     method = (item_type.underscore.tr("/", "_") + "=").to_sym
@@ -38,11 +58,5 @@ class Activity::Version < PaperTrail::Version
 
   # the column name scaffolding_absolutely_abstract_creative_concepts_collaborator is too long for postgres
   # so that our automatic assignment works, we alias these methods back to the full names
-  def scaffolding_absolutely_abstract_creative_concepts_collaborator=(value)
-    self.creative_concepts_collaborator = value
-  end
-
-  def scaffolding_absolutely_abstract_creative_concepts_collaborator
-    creative_concepts_collaborator
-  end
+  alias_attribute :scaffolding_absolutely_abstract_creative_concepts_collaborator, :creative_concepts_collaborator
 end

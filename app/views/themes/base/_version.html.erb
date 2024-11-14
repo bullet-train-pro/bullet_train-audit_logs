@@ -1,9 +1,5 @@
 <% yield p = np %>
-<%  user = User.find_by_id(version.whodunnit)    %>
-<% item_class ||= version.item_type %>
-<% item ||= version.item&.reload %>
-<% last_version = Activity::Version.where(item_type: version.item_type, item_id: version.item_id).order(:created_at).last %>
-<% item_name ||= (item || last_version.reify)&.label_string %>
+<% version.record&.reload %>
 
 <li class="mb-10 pl-4 relative">
   <div class="absolute w-3 h-3 bg-gray-200 rounded-full -left-1.5 top-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
@@ -12,16 +8,19 @@
     <% if p.content_for? :header %>
       <%= p.content_for :header %>
     <% else %>
-      <%= [user&.label_string, t("activity/versions.events.#{version.event}.past_tense")].join(" ") %>
-      <%= " the " + t("#{item_class.underscore.pluralize}.label").singularize %>
+      <%= [version.user&.label_string, t("activity/versions.events.#{version.event}.past_tense")].join(" ") %>
+      the
+      <%= t("#{version.record_type.underscore.pluralize}.label").singularize %>
+
       <%# if the item has been destroyed, we use the last recorded version to show consistent names for the item across its history %>
-      <% if item %>
-        <%= link_to item_name, [:account, item] %>
+      <% if version.record %>
+        <%= link_to version.record.name, [:account, version.record] %>
       <% else %>
-        <%= item_name %>
+        <%= version.latest.reify&.label_string %>
       <% end %>
-      <% if item && item_name != item.label_string %>
-        <small>(now called <%= item.name %>)</small>
+
+      <% if version.record&.label_string != version.latest&.reify&.label_string %>
+        <small>(now called <%= version.record.name %>)</small>
       <% end %>
     <% end %>
   </h3>
