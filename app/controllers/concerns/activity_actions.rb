@@ -1,6 +1,10 @@
 module ActivityActions
   extend ActiveSupport::Concern
 
+  included do
+    before_action :set_paper_trail_whodunnit
+  end
+
   def activity
     @versions = @child_object.activity_versions
     if params[:without_children]
