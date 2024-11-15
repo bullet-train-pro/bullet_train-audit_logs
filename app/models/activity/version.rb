@@ -1,4 +1,6 @@
-class Activity::Version < PaperTrail::Version
+class Activity::Version < ActiveRecord::Base
+  include PaperTrail::VersionConcern
+
   self.table_name = :activity_versions
   self.sequence_name = :activity_versions_id_seq
 
